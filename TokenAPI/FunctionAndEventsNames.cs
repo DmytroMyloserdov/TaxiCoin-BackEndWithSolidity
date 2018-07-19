@@ -8,6 +8,5 @@
         public const string Refund = "refund";
         public const string ApproveRefund = "approveRefund";
         public const string Deposit = "deposit";
-        public const string PaymentCreationEvent = "PaymentCreation";
     }
 }
