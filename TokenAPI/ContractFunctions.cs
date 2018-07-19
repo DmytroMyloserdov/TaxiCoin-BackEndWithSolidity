@@ -19,7 +19,7 @@ namespace TokenAPI
             ByteCode = byteCode;
         }
 
-        public async Task DeployContract(string senderAddress, string password, long gas, long totalSupply)
+        public async void DeployContract(string senderAddress, string password, ulong gas, ulong totalSupply)
         {
             var web3 = GetWeb3Account(senderAddress, password);
 

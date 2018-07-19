@@ -67,6 +67,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CryptoController.cs" />
+    <Compile Include="Controllers\DeployController.cs" />
     <Compile Include="Controllers\DepositController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -75,7 +77,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestObjectPatterns\CreatePaymentPattern.cs" />
+    <Compile Include="RequestObjectPatterns\CryptoResponsePattern.cs" />
     <Compile Include="RequestObjectPatterns\DefaultControllerPattern.cs" />
+    <Compile Include="RequestObjectPatterns\DeployControllerPattern.cs" />
     <Compile Include="RequestObjectPatterns\IControllerPattern.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Crypto.cs" />

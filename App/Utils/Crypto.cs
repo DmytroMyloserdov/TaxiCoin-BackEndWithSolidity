@@ -8,13 +8,8 @@ namespace App.Utils
 {
     public class Crypto
     {
-        private const string initVector = "apfn39f[j37rmfi;";
+        private const string initVector = "pemgail9uzpgzl88";
         private const int keysize = 256;
-
-        internal static void DecryptTwoStringsAndGetContractFunctions(out string senderAddress, object sender, out string password1, object password2, object passPhrase, out object contractFunctions)
-        {
-            throw new NotImplementedException();
-        }
 
         //Encrypt
         public static string EncryptString(string plainText, string passPhrase)
@@ -60,6 +55,18 @@ namespace App.Utils
             first = DecryptString(cipherFirst, passPhrase);
             second = DecryptString(cipherSecond, passPhrase);
             contractFunctions = Globals.GetInstance().ContractFunctions;
+        }
+
+        public static void EncryptTwoStrings(out string first, string plainFirst, out string second, string plainSecond, string passPhrase)
+        {
+            first = EncryptString(plainFirst, passPhrase);
+            second = EncryptString(plainSecond, passPhrase);
+        }
+
+        public static void DecryptTwoStrings(out string first, string cipherFirst, out string second, string cipherSecond, string passPhrase)
+        {
+            first = DecryptString(cipherFirst, passPhrase);
+            second = DecryptString(cipherSecond, passPhrase);
         }
     }
 }
