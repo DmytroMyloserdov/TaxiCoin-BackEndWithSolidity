@@ -27,7 +27,7 @@ namespace TokenAPI
             ContractAddress = receipt.ContractAddress;
         }
 
-        public async Task<TypeOfResult> CallFunctionByName<TypeOfResult>(string senderAddress, string password, string functionName, Type returnType, params object[] parametrsOfFunction) where TypeOfResult : class
+        public async Task<TypeOfResult> CallFunctionByName<TypeOfResult>(string senderAddress, string password, string functionName, params object[] parametrsOfFunction)
         {
             var web3 = GetWeb3Account(senderAddress, password);
 

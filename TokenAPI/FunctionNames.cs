@@ -1,6 +1,6 @@
 ﻿namespace TokenAPI
 {
-    public class FunctionAndEventsNames
+    public class FunctionNames
     {
         public const string CreatePayment = "createPayment";
         public const string GetOrder = "getOrder";
