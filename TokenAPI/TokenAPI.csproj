@@ -88,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContractFunctions.cs" />
-    <Compile Include="FunctionAndEventsNames.cs" />
+    <Compile Include="FunctionNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
