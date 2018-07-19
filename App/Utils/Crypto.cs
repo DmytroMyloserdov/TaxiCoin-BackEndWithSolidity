@@ -2,6 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using TokenAPI;
 
 namespace App.Utils
 {
@@ -9,6 +10,12 @@ namespace App.Utils
     {
         private const string initVector = "apfn39f[j37rmfi;";
         private const int keysize = 256;
+
+        internal static void DecryptTwoStringsAndGetContractFunctions(out string senderAddress, object sender, out string password1, object password2, object passPhrase, out object contractFunctions)
+        {
+            throw new NotImplementedException();
+        }
+
         //Encrypt
         public static string EncryptString(string plainText, string passPhrase)
         {
@@ -45,6 +52,14 @@ namespace App.Utils
             memoryStream.Close();
             cryptoStream.Close();
             return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+        }
+
+
+        public static void DecryptTwoStringsAndGetContractFunctions(out string first, string cipherFirst, out string second, string cipherSecond, string passPhrase, out ContractFunctions contractFunctions)
+        {
+            first = DecryptString(cipherFirst, passPhrase);
+            second = DecryptString(cipherSecond, passPhrase);
+            contractFunctions = Globals.GetInstance().ContractFunctions;
         }
     }
 }
