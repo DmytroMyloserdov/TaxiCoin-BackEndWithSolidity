@@ -1,13 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using App.RequestObjectPatterns;
+using App.Utils;
+using System;
+using System.Net.Http;
 using System.Web.Http;
+using TokenAPI;
 
 namespace App.Controllers
 {
     public class DepositController : ApiController
     {
+        [HttpPost]
+        public HttpResponseMessage Post([FromBody] DefaultControllerPattern req)
+        {
+            var result = TokenFunctionsResults<UInt64, DefaultControllerPattern>.Invoke(req, FunctionNames.Deposit);
+
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, result);
+        }
     }
 }

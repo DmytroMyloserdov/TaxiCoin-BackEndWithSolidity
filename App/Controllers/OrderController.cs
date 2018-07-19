@@ -9,18 +9,18 @@ namespace App.Controllers
 {
     public class OrderController : ApiController
     {
-        [HttpGet]
+        [HttpPost]
         public HttpResponseMessage GetOrderStatus(UInt64 id, [FromBody] DefaultControllerPattern req)
         {
-            var result = TokenFunctionsResults<UInt64, DefaultControllerPattern>.Invoke(id, req, FunctionNames.GetOrder);
+            var result = TokenFunctionsResults<int, DefaultControllerPattern>.Invoke(id, req, FunctionNames.GetOrder);
 
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, result);
         }
 
-        [HttpPut]
+        [HttpPost]
         public HttpResponseMessage CompleteOrder(UInt64 id, [FromBody] DefaultControllerPattern req)
         {
-            var result = TokenFunctionsResults<UInt64, DefaultControllerPattern>.Invoke(id, req, FunctionNames.CompleteOrder);
+            var result = TokenFunctionsResults<int, DefaultControllerPattern>.Invoke(id, req, FunctionNames.CompleteOrder);
 
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, result);
         }

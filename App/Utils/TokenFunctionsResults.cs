@@ -16,5 +16,12 @@ namespace App.Utils
 
             return contractFunctions.CallFunctionByName<TResult>(senderAddress, password, funcName, id).Result;
         }
+
+        public static TResult Invoke(TPattern req, string funcName)
+        {
+            Crypto.DecryptTwoStringsAndGetContractFunctions(out string senderAddress, req.Sender, out string password, req.Password, req.PassPhrase, out ContractFunctions contractFunctions);
+
+            return contractFunctions.CallFunctionByName<TResult>(senderAddress, password, funcName, null).Result;
+        }
     }
 }
