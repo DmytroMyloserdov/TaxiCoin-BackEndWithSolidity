@@ -38,6 +38,13 @@ namespace TokenAPI
             return result;
         }
 
+        public async Task<string> GetUserBalance(string senderAddress, string password)
+        {
+            var web3 = GetWeb3Account(senderAddress, password);
+            var res = await web3.Eth.GetBalance.SendRequestAsync(senderAddress);
+            return res.Value.ToString();
+        }
+
 
         private Web3 GetWeb3Account(string senderAddress, string password)
         {
