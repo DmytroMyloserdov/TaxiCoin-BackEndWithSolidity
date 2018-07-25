@@ -12,7 +12,7 @@ namespace App.Controllers
         [HttpPost]
         public HttpResponseMessage GetOrderStatus(UInt64 id, [FromBody] DefaultControllerPattern req)
         {
-            var result = TokenFunctionsResults<int, DefaultControllerPattern>.Invoke(id, req, FunctionNames.GetOrder);
+            var result = TokenFunctionsResults<int, DefaultControllerPattern>.InvokeByCall(id, req, FunctionNames.GetOrder);
 
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, result);
         }
@@ -20,7 +20,7 @@ namespace App.Controllers
         [HttpPost]
         public HttpResponseMessage CompleteOrder(UInt64 id, [FromBody] DefaultControllerPattern req)
         {
-            var result = TokenFunctionsResults<int, DefaultControllerPattern>.Invoke(id, req, FunctionNames.CompleteOrder);
+            var result = TokenFunctionsResults<int, DefaultControllerPattern>.InvokeByCall(id, req, FunctionNames.CompleteOrder);
 
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, result);
         }

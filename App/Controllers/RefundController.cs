@@ -12,7 +12,7 @@ namespace App.Controllers
         [HttpPost]
         public HttpResponseMessage Create(UInt64 id, [FromBody] DefaultControllerPattern req)
         {
-            var result = TokenFunctionsResults<int, DefaultControllerPattern>.Invoke(id, req, FunctionNames.Refund);
+            var result = TokenFunctionsResults<int, DefaultControllerPattern>.InvokeByCall(id, req, FunctionNames.Refund);
 
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, result);
         }
@@ -20,7 +20,7 @@ namespace App.Controllers
         [HttpPost]
         public HttpResponseMessage Approve(UInt64 id, [FromBody] DefaultControllerPattern req)
         {
-            var result = TokenFunctionsResults<int, DefaultControllerPattern>.Invoke(id, req, FunctionNames.ApproveRefund);
+            var result = TokenFunctionsResults<int, DefaultControllerPattern>.InvokeByCall(id, req, FunctionNames.ApproveRefund);
 
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, result);
         }

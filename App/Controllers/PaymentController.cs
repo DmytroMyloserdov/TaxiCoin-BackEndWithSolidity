@@ -12,7 +12,7 @@ namespace App.Controllers
         [HttpPost]
         public HttpResponseMessage Create(UInt64 id, [FromBody] CreatePaymentPattern req)
         {
-            var result = TokenFunctionsResults<int, CreatePaymentPattern>.Invoke(id, req, FunctionNames.CreatePayment, req.Value);
+            var result = TokenFunctionsResults<int, CreatePaymentPattern>.InvokeByCall(id, req, FunctionNames.CreatePayment, req.Value);
 
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, result);
         }

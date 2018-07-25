@@ -1,4 +1,5 @@
 ﻿using Nethereum.Contracts;
+using Nethereum.RPC.Eth.DTOs;
 using Nethereum.Web3;
 using Nethereum.Web3.Accounts.Managed;
 using System;
@@ -36,6 +37,18 @@ namespace TokenAPI
 
             var result = await calledFunction.CallAsync<TypeOfResult>(parametrsOfFunction);
             return result;
+        }
+
+        public async Task<TransactionReceipt> CallFunctionByName(string senderAddress, string password, string functionName, params object[] parametrsOfFunction)
+        {
+            var web3 = GetWeb3Account(senderAddress, password);
+
+            var contract = web3.Eth.GetContract(Abi, ContractAddress);
+            var calledFunction = contract.GetFunction(functionName);
+
+            var gas = await calledFunction.EstimateGasAsync(senderAddress, null, null, parametrsOfFunction);
+            var receipt = await calledFunction.SendTransactionAndWaitForReceiptAsync(senderAddress, gas, null, null, parametrsOfFunction);
+            return receipt;
         }
 
         public async Task<string> GetUserBalance(string senderAddress, string password)
