@@ -1,4 +1,5 @@
-﻿using Nethereum.Contracts;
+﻿using Nethereum.ABI.FunctionEncoding.Attributes;
+using Nethereum.Contracts;
 using Nethereum.RPC.Eth.DTOs;
 using Nethereum.Web3;
 using Nethereum.Web3.Accounts.Managed;
@@ -56,6 +57,42 @@ namespace TokenAPI
             var web3 = GetWeb3Account(senderAddress, password);
             var res = await web3.Eth.GetBalance.SendRequestAsync(senderAddress);
             return res.Value.ToString();
+        }
+
+        public async Task<Payment> DeserializePaymentById(string senderAddress, string password, UInt64 id)
+        {
+            var web3 = GetWeb3Account(senderAddress, password);
+            var contract = web3.Eth.GetContract(Abi, ContractAddress);
+            var payments = contract.GetFunction("payments");
+
+            var result = await payments.CallDeserializingToObjectAsync<Payment>(id);
+            return result;
+        }
+
+        /*struct Payment {
+            address Customer;
+            address Driver; 
+            uint value;
+            PaymentStatus status;
+            bool refundApproved;
+            bool isValue;
+        }*/
+
+        [FunctionOutput]
+        public class Payment
+        {
+            [Parameter("address", "Customer", 1)]
+            string Customer { get; set; }
+            [Parameter("address", "Driver", 2)]
+            string Driver { get; set; }
+            [Parameter("uint", "value", 3)]
+            UInt64 Value { get; set; }
+            [Parameter("PaymentStatus", "status", 4)]
+            object Status { get; set; }
+            [Parameter("bool", "refundApproved", 5)]
+            bool RefundApproved { get; set; }
+            [Parameter("bool", "isValue", 6)]
+            bool IsValue { get; set; }
         }
 
 
