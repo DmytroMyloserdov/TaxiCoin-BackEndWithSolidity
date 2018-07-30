@@ -93,6 +93,7 @@
     <Compile Include="RequestObjectPatterns\CryptoResponsePattern.cs" />
     <Compile Include="RequestObjectPatterns\DefaultControllerPattern.cs" />
     <Compile Include="RequestObjectPatterns\DeployControllerPattern.cs" />
+    <Compile Include="RequestObjectPatterns\DepositControllerPattern.cs" />
     <Compile Include="RequestObjectPatterns\IControllerPattern.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Crypto.cs" />
