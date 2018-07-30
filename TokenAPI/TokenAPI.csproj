@@ -89,6 +89,8 @@
   <ItemGroup>
     <Compile Include="ContractFunctions.cs" />
     <Compile Include="FunctionNames.cs" />
+    <Compile Include="Payment.cs" />
+    <Compile Include="PaymentStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
