@@ -7,6 +7,8 @@
         public const string CompleteOrder = "completeOrder";
         public const string Refund = "refund";
         public const string ApproveRefund = "approveRefund";
+        public const string DisApproveRefund = "disApproveRefund";
         public const string Deposit = "deposit";
+        public const string Balance = "balanceOf";
     }
 }

@@ -1,10 +1,8 @@
-﻿using Nethereum.ABI.FunctionEncoding.Attributes;
-using Nethereum.Contracts;
+﻿using Nethereum.Hex.HexTypes;
 using Nethereum.RPC.Eth.DTOs;
 using Nethereum.Web3;
-using Nethereum.Web3.Accounts.Managed;
+using Nethereum.Web3.Accounts;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace TokenAPI
@@ -21,12 +19,13 @@ namespace TokenAPI
             ByteCode = byteCode;
         }
 
-        public async void DeployContract(string senderAddress, string password, ulong gas, ulong totalSupply)
+        public async Task<TransactionReceipt> DeployContract(string senderAddress, string password, ulong gas)
         {
             var web3 = GetWeb3Account(senderAddress, password);
 
-            var receipt = await web3.Eth.DeployContract.SendRequestAndWaitForReceiptAsync(Abi, ByteCode, senderAddress, new Nethereum.Hex.HexTypes.HexBigInteger(gas), null, totalSupply);
+            var receipt = await web3.Eth.DeployContract.SendRequestAndWaitForReceiptAsync(Abi, ByteCode, senderAddress, new Nethereum.Hex.HexTypes.HexBigInteger(gas), null);
             ContractAddress = receipt.ContractAddress;
+            return receipt;
         }
 
         public async Task<TypeOfResult> CallFunctionByName<TypeOfResult>(string senderAddress, string password, string functionName, params object[] parametrsOfFunction)
@@ -40,14 +39,26 @@ namespace TokenAPI
             return result;
         }
 
-        public async Task<TransactionReceipt> CallFunctionByName(string senderAddress, string password, string functionName, params object[] parametrsOfFunction)
+        public async Task<TransactionReceipt> CallFunctionByNameSendTransaction(string senderAddress, string password, string functionName, UInt64 Value, UInt64 Gas, params object[] parametrsOfFunction)
         {
             var web3 = GetWeb3Account(senderAddress, password);
 
             var contract = web3.Eth.GetContract(Abi, ContractAddress);
             var calledFunction = contract.GetFunction(functionName);
 
-            var gas = await calledFunction.EstimateGasAsync(senderAddress, null, null, parametrsOfFunction);
+            var gas = new HexBigInteger(Gas);// await calledFunction.EstimateGasAsync(senderAddress, null, new HexBigInteger(Value), parametrsOfFunction);
+            var receipt = await calledFunction.SendTransactionAndWaitForReceiptAsync(senderAddress, gas, new HexBigInteger(Value), null, parametrsOfFunction);
+            return receipt;
+        }
+
+        public async Task<TransactionReceipt> CallFunctionByNameSendTransaction(string senderAddress, string password, string functionName, UInt64 Gas, params object[] parametrsOfFunction)
+        {
+            var web3 = GetWeb3Account(senderAddress, password);
+
+            var contract = web3.Eth.GetContract(Abi, ContractAddress);
+            var calledFunction = contract.GetFunction(functionName);
+
+            var gas = new HexBigInteger(Gas); //await calledFunction.EstimateGasAsync(senderAddress, null, null, parametrsOfFunction);
             var receipt = await calledFunction.SendTransactionAndWaitForReceiptAsync(senderAddress, gas, null, null, parametrsOfFunction);
             return receipt;
         }
@@ -69,37 +80,11 @@ namespace TokenAPI
             return result;
         }
 
-        /*struct Payment {
-            address Customer;
-            address Driver; 
-            uint value;
-            PaymentStatus status;
-            bool refundApproved;
-            bool isValue;
-        }*/
-
-        [FunctionOutput]
-        public class Payment
-        {
-            [Parameter("address", "Customer", 1)]
-            string Customer { get; set; }
-            [Parameter("address", "Driver", 2)]
-            string Driver { get; set; }
-            [Parameter("uint", "value", 3)]
-            UInt64 Value { get; set; }
-            [Parameter("PaymentStatus", "status", 4)]
-            object Status { get; set; }
-            [Parameter("bool", "refundApproved", 5)]
-            bool RefundApproved { get; set; }
-            [Parameter("bool", "isValue", 6)]
-            bool IsValue { get; set; }
-        }
-
 
         private Web3 GetWeb3Account(string senderAddress, string password)
         {
-            var account = new ManagedAccount(senderAddress, password);
-            return new Web3(account);
+            var account = new Account(password);
+            return new Web3(account, "http://127.0.0.1:7545");
         }
     }
 }
